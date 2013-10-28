@@ -1,0 +1,4 @@
+name = Mobile Detect
+description = Detect mobile devices
+core = 7.x
+package = Other
