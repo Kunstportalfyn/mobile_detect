@@ -12,8 +12,13 @@ function mobile_detect_init() {
 
 function mobile_detect_preprocess_page(&$variables) {
   if (drupal_is_front_page()) {
-    $m_detect = new Mobile_Detect(); 
+    $m_detect = new Mobile_Detect();
+    // detects mobile devices excluding tablets
     $variables["mobile"] = $m_detect->isMobile();
-    //$m_detect->isMobile();
+    // $_COOKIE["mobile"] holds the version of the site to be displayed, 1 =  mobile, 0 = desktop.
+    // Assume mobile version on mobile device as default
+    if(!isset($_COOKIE["mobile"])) {
+      $_COOKIE["mobile"] = 1;
+    }
   }
 }

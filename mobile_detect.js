@@ -5,19 +5,22 @@
 (function($) {
 
   $.fn.goMobile = function() {
-    $.post(Drupal.settings.basePath + '/frontpage', {mobile: 1}, function() {
-
-      window.location = document.URL;
-    });
-
+    setCookie("mobile", 1, 365);
+    window.location = document.URL;
   };
 
 
   $.fn.goDesktop = function() {
-    $.post(Drupal.settings.basePath + '/frontpage', {mobile: 0}, function() {
-
-      window.location = document.URL;
-      
-    });
+    setCookie("mobile", 0, 365);
+    window.location = document.URL;
   };
+  
+  function setCookie(c_name, value, exdays)
+  {
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+    document.cookie=c_name + "=" + c_value;
+  }
+  
 })(jQuery);
