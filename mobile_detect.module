@@ -4,6 +4,12 @@
  **/
 require_once "mobile_detect.php";
 
+function mobile_detect_init() {
+  if (drupal_is_front_page()) {
+    drupal_add_js(drupal_get_path('module', 'mobile_detect') . '/mobile_detect.js');
+  }
+}
+
 function mobile_detect_preprocess_page(&$variables) {
   if (drupal_is_front_page()) {
     $m_detect = new Mobile_Detect(); 
