@@ -5,22 +5,22 @@
 (function($) {
 
   $.fn.goMobile = function() {
-    setCookie("mobile", 1, 365);
+    setCookie("mobile", true, 365);
     window.location.href = document.URL;
   };
 
 
   $.fn.goDesktop = function() {
-    setCookie("mobile", 0, 365);
+    setCookie("mobile", false, 365);
     window.location.href = document.URL;
   };
   
   function setCookie(c_name, value, exdays)
   {
-    var exdate=new Date();
+    var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-    document.cookie=c_name + "=" + c_value;
+    var c_value = escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+    document.cookie = c_name + "=" + c_value;
   }
   
 })(jQuery);

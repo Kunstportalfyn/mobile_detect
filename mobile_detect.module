@@ -20,5 +20,17 @@ function mobile_detect_preprocess_page(&$variables) {
     if(!isset($_COOKIE["mobile"])) {
       $_COOKIE["mobile"] = 1;
     }
+    
+   $viewport = array(
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => array(
+      'name' =>  'viewport',
+      'content' =>  'width=device-width, initial-scale=1, maximum-scale=1'
+      )
+    );
+    if ($variables["mobile"] && ($_COOKIE["mobile"] == "true")) {
+      drupal_add_html_head($viewport, 'viewport');
+    }
   }
 }
