@@ -11,12 +11,15 @@ function mobile_detect_init() {
 }
 
 function mobile_detect_url_outbound_alter(&$path, &$options, $original_path) {
-  if(isset($_GET["m"])) {
-    if(!isset($options["query"]["m"]) && $options['external'] != TRUE) {
+  if(!isset($options["query"]["m"]) && $options['external'] != TRUE) {
+    if(isset($_GET["m"])) {
       array_push($options["query"], array("m" => $_GET["m"]));
     }
+    else {
+      $m_detect = new Mobile_Detect();
+      array_push($options["query"], array("m" => $m_detect->isMobile()?1:0));
+    }
   }
-  //debug($options);
 }
 
 function mobile_detect_preprocess_page(&$variables) {
@@ -26,8 +29,8 @@ function mobile_detect_preprocess_page(&$variables) {
     $variables["mobile"] = $m_detect->isMobile();
     // $_COOKIE["mobile"] holds the version of the site to be displayed, 1 =  mobile, 0 = desktop.
     // Assume mobile version on mobile device as default
-    if(!isset($_COOKIE["mobile"])) {
-      setcookie ("mobile", "true", (time()+60*60*24*365));
+    if(!isset($_GET["m"])) {
+      $_GET["m"] = 1;
     }
     
     $viewport = array(
@@ -38,7 +41,7 @@ function mobile_detect_preprocess_page(&$variables) {
         'content' =>  'width=device-width, initial-scale=1, maximum-scale=1'
       )
     );
-    if ($variables["mobile"] && ($_COOKIE["mobile"] == "true")) {
+    if ($variables["mobile"] && ($_GET["m"] == 1)) {
       drupal_add_html_head($viewport, 'viewport');
     }
   }
