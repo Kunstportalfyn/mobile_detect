@@ -10,6 +10,15 @@ function mobile_detect_init() {
   }
 }
 
+function mobile_detect_url_outbound_alter(&$path, &$options, $original_path) {
+  if(isset($_GET["m"])) {
+    if(!isset($options["query"]["m"]) && $options['external'] != TRUE) {
+      array_push($options["query"], array("m" => $_GET["m"]));
+    }
+  }
+  //debug($options);
+}
+
 function mobile_detect_preprocess_page(&$variables) {
   if (drupal_is_front_page()) {
     $m_detect = new Mobile_Detect();

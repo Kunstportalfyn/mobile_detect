@@ -6,13 +6,15 @@
 
   $.fn.goMobile = function() {
     setCookie("mobile", true, 365);
-    window.location.href = document.URL;
+    var baseURL =  location.protocol + "//" + location.hostname + location.pathname;
+    window.location.href = baseURL+"?m=1"; // time=" + new Date().getTime() + "&
   };
 
 
   $.fn.goDesktop = function() {
     setCookie("mobile", false, 365);
-    window.location.href = document.URL;
+    var baseURL =  location.protocol + "//" + location.hostname + location.pathname;
+    window.location.href = baseURL+"?m=0";
   };
   
   function setCookie(c_name, value, exdays)
